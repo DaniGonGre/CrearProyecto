@@ -3,7 +3,9 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 
 import javax.swing.*;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,10 +13,15 @@ public class Main {
         try {
             //Pedimos el token al usuario
             String token = JOptionPane.showInputDialog("Introduce el token de GitHub: ");
-        //    String pathAlFich = "/home/dam1/IdeaProjects/CrearProyecto/ficheroToken.propierties";
+            //Creamos el fichero
+            String pathAlFich = "/home/dam1/IdeaProjects/CrearProyecto/ficheroToken.propierties";
+            //Escribimos el token en el fichero
+            FileWriter fich = new FileWriter(pathAlFich, false);
+            PrintWriter esc = new PrintWriter(fich);
+            esc.println("oauth=" + token);
             github = new GitHubBuilder()
-                    .withOAuthToken(token)
-             //       .fromPropertyFile(pathAlFich)
+             //       .withOAuthToken(token)
+                    .fromPropertyFile(pathAlFich)
                     .build();
         } catch (IOException e) {
             e.printStackTrace();
